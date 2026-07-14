@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Part;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Process;
 
 class BookController extends Controller
 {
@@ -31,6 +33,74 @@ class BookController extends Controller
         $page = $this->chapterStartPages()[$chapter->number] ?? null;
 
         return view('book.chapter', compact('chapter', 'previous', 'next', 'page'));
+    }
+
+    /** The whole book on one page: front matter followed by every chapter. */
+    public function print()
+    {
+        $parts = Part::with([
+            'chapters.sections.blocks.dialogueLines',
+            'chapters.sections.blocks.vocabWords',
+        ])->orderBy('number')->get();
+
+        $pages = $this->chapterStartPages();
+
+        return view('book.print', compact('parts', 'pages'));
+    }
+
+    /**
+     * Download the full book as a PDF, rendered by headless Chrome so the
+     * print stylesheet, webfonts, and ruby annotations all come out exactly
+     * as they do from the browser's own print dialog. The result is cached
+     * in storage; append ?refresh=1 after editing content.
+     */
+    public function pdf(Request $request)
+    {
+        $file = storage_path('app/book.pdf');
+
+        if ($request->boolean('refresh') || ! is_file($file)) {
+            $this->renderPdf(route('book.print'), $file);
+        }
+
+        return response()->download($file, 'JLPT-N5-Pregnancy-and-Hospital-Survival-Guide.pdf');
+    }
+
+    private function renderPdf(string $url, string $file): void
+    {
+        $result = Process::timeout(300)->run([
+            $this->chromeBinary(),
+            '--headless=new',
+            '--disable-gpu',
+            '--hide-scrollbars',
+            '--no-pdf-header-footer',
+            '--virtual-time-budget=20000',
+            '--print-to-pdf=' . $file,
+            $url,
+        ]);
+
+        if (! $result->successful() || ! is_file($file)) {
+            abort(500, 'PDF generation failed: ' . trim($result->errorOutput()));
+        }
+    }
+
+    private function chromeBinary(): string
+    {
+        $candidates = array_filter([
+            config('services.chrome.path'),
+            'C:\Program Files\Google\Chrome\Application\chrome.exe',
+            'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
+            '/usr/bin/google-chrome',
+            '/usr/bin/chromium',
+            '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        ]);
+
+        foreach ($candidates as $path) {
+            if (is_file($path)) {
+                return $path;
+            }
+        }
+
+        abort(500, 'Chrome not found. Set CHROME_PATH in .env to your Chrome or Chromium binary.');
     }
 
     /**

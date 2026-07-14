@@ -156,11 +156,13 @@ rt {
 
 .chrome .chrome-group { display: flex; gap: 6px; align-items: center; }
 
-.chrome button.print-btn {
+.chrome button.print-btn,
+.chrome a.pdf-btn {
     color: var(--vermilion);
     border-color: var(--vermilion);
 }
-.chrome button.print-btn:hover {
+.chrome button.print-btn:hover,
+.chrome a.pdf-btn:hover {
     background: var(--vermilion);
     border-color: var(--vermilion);
     color: var(--paper-bright);
