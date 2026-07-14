@@ -59,13 +59,19 @@ class BookController extends Controller
         $file = storage_path('app/book.pdf');
 
         if ($request->boolean('refresh') || ! is_file($file)) {
-            $this->renderPdf(route('book.print'), $file);
+            $this->renderPdfFile(route('book.print'), $file);
         }
 
         return response()->download($file, 'JLPT-N5-Pregnancy-and-Hospital-Survival-Guide.pdf');
     }
 
-    private function renderPdf(string $url, string $file): void
+    /** Where book:calibrate stores measured chapter start pages. */
+    public static function pageMapPath(): string
+    {
+        return storage_path('app/chapter-pages.json');
+    }
+
+    public function renderPdfFile(string $url, string $file): void
     {
         $result = Process::timeout(300)->run([
             $this->chromeBinary(),
@@ -104,14 +110,25 @@ class BookController extends Controller
     }
 
     /**
-     * Estimated starting page for each chapter, keyed by chapter number.
+     * Starting page for each chapter, keyed by chapter number.
      * Front matter (cover, foreword, contents) is numbered in roman
      * numerals, so chapter 1 opens the arabic sequence at page 1.
+     *
+     * Prefers exact numbers measured by `php artisan book:calibrate`;
+     * falls back to a content-volume estimate.
      *
      * @return array<int, int>
      */
     private function chapterStartPages(): array
     {
+        if (is_file(self::pageMapPath())) {
+            $measured = json_decode(file_get_contents(self::pageMapPath()), true);
+
+            if (is_array($measured) && $measured !== []) {
+                return array_combine(array_map('intval', array_keys($measured)), array_map('intval', $measured));
+            }
+        }
+
         $chapters = Chapter::with(['sections.blocks' => fn ($query) => $query->withCount(['dialogueLines', 'vocabWords'])])
             ->orderBy('number')
             ->get();
@@ -127,20 +144,24 @@ class BookController extends Controller
         return $pages;
     }
 
-    /** Approximate printed length of a chapter from its content volume. */
+    /**
+     * Approximate printed length of a chapter from its content volume.
+     * Constants fitted against pagination measured from a real Chrome
+     * print run (accurate to about one page per chapter).
+     */
     private function estimatedPageCount(Chapter $chapter): int
     {
-        $mm = 42; // chapter head + footer
+        $mm = 35; // chapter head + footer
 
         foreach ($chapter->sections as $section) {
-            $mm += 13; // section head
+            $mm += 18; // section head
 
             foreach ($section->blocks as $block) {
                 // row heights include furigana headroom
                 $mm += match ($block->type) {
-                    'dialogue' => 11 + 15 * $block->dialogue_lines_count,
-                    'vocab' => 11 + 9 * $block->vocab_words_count,
-                    'note', 'culture_note' => 26,
+                    'dialogue' => 16 + 17 * $block->dialogue_lines_count,
+                    'vocab' => 16 + 13 * $block->vocab_words_count,
+                    'note', 'culture_note' => 34,
                     'scene' => 7,
                     default => 16,
                 };
