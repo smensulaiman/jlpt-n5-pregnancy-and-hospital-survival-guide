@@ -1,0 +1,394 @@
+/* ============================================================
+   JLPT N5 Pregnancy & Hospital Survival Guide
+   Book stylesheet — washi paper, vermillion & indigo, Mincho
+   ============================================================ */
+
+:root {
+  --paper:      #faf6ee;
+  --paper-deep: #f3ecdd;
+  --ink:        #2b2620;
+  --ink-soft:   #5a5347;
+  --vermillion: #b23a2a;
+  --vermillion-deep: #8e2d20;
+  --indigo:     #2c4a6e;
+  --indigo-deep:#1d3450;
+  --gold:       #a8842c;
+  --rule:       #d9cfba;
+  --rule-dark:  #b7a98c;
+  --row-tint:   #f5efe2;
+
+  --jp-serif: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "MS PMincho", serif;
+  --latin-serif: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --label-sans: "Segoe UI", "Yu Gothic UI", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 17px; }
+
+body {
+  font-family: var(--latin-serif);
+  background: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 15% 8%, rgba(178, 58, 42, 0.035), transparent 55%),
+    radial-gradient(ellipse at 90% 95%, rgba(44, 74, 110, 0.045), transparent 50%);
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+.page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 2.2rem 2.4rem 4rem;
+}
+
+/* ---------- Book navigation (screen only) ---------- */
+.book-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--label-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+.book-nav.bottom { border-bottom: none; border-top: 1px solid var(--rule); margin-top: 3rem; }
+.book-nav a {
+  color: var(--indigo);
+  text-decoration: none;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--rule-dark);
+  border-radius: 2px;
+  background: #fffdf8;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.book-nav a:hover { background: var(--indigo); color: #fffdf8; border-color: var(--indigo); }
+.book-nav .nav-title {
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+  text-align: center;
+  flex: 1;
+}
+
+/* ---------- Chapter header ---------- */
+.chapter-head {
+  margin: 3.2rem 0 3rem;
+  position: relative;
+  padding-left: 1.6rem;
+  border-left: 4px solid var(--vermillion);
+}
+.chapter-head .ch-kanji {
+  font-family: var(--jp-serif);
+  font-size: 1.05rem;
+  color: var(--vermillion);
+  letter-spacing: 0.55em;
+  margin-bottom: 0.4rem;
+}
+.chapter-head .ch-kicker {
+  font-family: var(--label-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.55rem;
+}
+.chapter-head h1 {
+  font-family: var(--latin-serif);
+  font-weight: 700;
+  font-size: 2.35rem;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.chapter-head .ch-jp {
+  font-family: var(--jp-serif);
+  font-size: 1.15rem;
+  color: var(--indigo);
+}
+.chapter-head .ch-jp .romaji { color: var(--ink-soft); font-style: italic; font-size: 0.95rem; }
+
+/* ---------- Section headings ---------- */
+section { margin: 2.6rem 0; }
+
+h2 {
+  font-family: var(--latin-serif);
+  font-size: 1.32rem;
+  color: var(--indigo-deep);
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--rule-dark);
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+}
+h2 .sec-no {
+  font-family: var(--label-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fffdf8;
+  background: var(--vermillion);
+  padding: 0.18rem 0.5rem;
+  letter-spacing: 0.1em;
+  border-radius: 2px;
+  transform: translateY(-2px);
+}
+h2 .jp { font-family: var(--jp-serif); font-size: 1.05rem; color: var(--vermillion); font-weight: 400; }
+
+h3 {
+  font-family: var(--latin-serif);
+  font-size: 1.05rem;
+  color: var(--vermillion-deep);
+  margin: 1.8rem 0 0.7rem;
+  letter-spacing: 0.02em;
+}
+h3 .jp { font-family: var(--jp-serif); color: var(--indigo); font-weight: 400; font-size: 0.98rem; }
+
+p { margin-bottom: 0.9rem; }
+p.scene {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.93rem;
+  margin: 0.2rem 0 0.7rem;
+}
+strong { color: var(--vermillion-deep); }
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0 1.6rem;
+  font-size: 0.92rem;
+  background: #fffdf8;
+  border-top: 3px double var(--rule-dark);
+  border-bottom: 3px double var(--rule-dark);
+}
+thead th {
+  font-family: var(--label-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #fffdf8;
+  background: var(--indigo);
+  padding: 0.55rem 0.8rem;
+  text-align: left;
+}
+tbody td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background: var(--row-tint); }
+tbody tr:last-child td { border-bottom: none; }
+
+td.jp, .vocab td:first-child {
+  font-family: var(--jp-serif);
+  font-size: 1.04rem;
+  color: var(--ink);
+}
+td.ro { font-style: italic; color: var(--indigo); }
+td.en { color: var(--ink-soft); }
+
+/* Conversation tables */
+table.dialogue td.spk {
+  font-family: var(--label-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  padding-top: 0.75rem;
+}
+.spk-husband  { color: var(--indigo); }
+.spk-wife     { color: #9d4a76; }
+.spk-nurse    { color: #3d7a52; }
+.spk-doctor   { color: var(--vermillion-deep); }
+.spk-midwife  { color: #7a5c99; }
+.spk-staff    { color: var(--gold); }
+.spk-other    { color: var(--ink-soft); }
+
+/* Column width hints */
+table.dialogue th:nth-child(1) { width: 11%; }
+table.dialogue th:nth-child(2) { width: 31%; }
+table.dialogue th:nth-child(3) { width: 29%; }
+table.dialogue th:nth-child(4) { width: 29%; }
+table.vocab th:nth-child(1) { width: 30%; }
+table.vocab th:nth-child(2) { width: 32%; }
+table.vocab th:nth-child(3) { width: 38%; }
+
+/* ---------- Callouts ---------- */
+.note {
+  background: #fffdf8;
+  border: 1px solid var(--rule-dark);
+  border-left: 5px solid var(--vermillion);
+  padding: 1.1rem 1.3rem;
+  margin: 1.2rem 0;
+  font-size: 0.93rem;
+  border-radius: 0 3px 3px 0;
+}
+.note .note-title {
+  font-family: var(--label-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--vermillion);
+  margin-bottom: 0.5rem;
+}
+.note ul { margin: 0.3rem 0 0.3rem 1.2rem; }
+.note li { margin-bottom: 0.45rem; }
+.note.culture { border-left-color: var(--indigo); }
+.note.culture .note-title { color: var(--indigo); }
+
+/* ---------- Cover page ---------- */
+.cover {
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 4rem 1rem;
+}
+.cover .hanko {
+  width: 74px; height: 74px;
+  margin: 0 auto 2.2rem;
+  border: 3px solid var(--vermillion);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--jp-serif);
+  font-size: 1.6rem;
+  color: var(--vermillion);
+  letter-spacing: 0;
+}
+.cover .series {
+  font-family: var(--label-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.45em;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.4rem;
+}
+.cover h1 {
+  font-size: 3rem;
+  line-height: 1.12;
+  color: var(--ink);
+  max-width: 15em;
+  margin: 0 auto 1.1rem;
+}
+.cover h1 em { color: var(--vermillion); font-style: normal; }
+.cover .jp-title {
+  font-family: var(--jp-serif);
+  font-size: 1.35rem;
+  color: var(--indigo);
+  margin-bottom: 1.8rem;
+}
+.cover .subtitle {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.08rem;
+  max-width: 34em;
+  margin: 0 auto 3rem;
+}
+.cover .cover-rule {
+  width: 120px; margin: 0 auto 3rem;
+  border: none; border-top: 3px double var(--rule-dark);
+}
+.cover .edition {
+  font-family: var(--label-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- Table of contents ---------- */
+.toc { margin-top: 1rem; }
+.toc-part {
+  font-family: var(--label-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.7rem;
+  color: var(--vermillion);
+  margin: 2.4rem 0 0.9rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--rule-dark);
+}
+.toc ol { list-style: none; }
+.toc li a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 0.55rem 0.4rem;
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px dotted var(--rule);
+  transition: background 0.15s;
+}
+.toc li a:hover { background: var(--row-tint); }
+.toc .toc-no {
+  font-family: var(--label-sans);
+  font-size: 0.72rem;
+  color: var(--vermillion);
+  min-width: 2.4em;
+  font-weight: 700;
+}
+.toc .toc-title { font-weight: 600; }
+.toc .toc-jp {
+  font-family: var(--jp-serif);
+  color: var(--indigo);
+  font-size: 0.9rem;
+  margin-left: auto;
+  text-align: right;
+}
+
+/* ---------- Intro page prose ---------- */
+.foreword { max-width: 42em; }
+.foreword h2 { margin-top: 2.4rem; }
+
+/* ---------- Footer ---------- */
+.book-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--label-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ---------- Print ---------- */
+@page { size: A4; margin: 18mm 16mm; }
+@media print {
+  html { font-size: 10.5pt; }
+  body { background: #fff; }
+  .page { max-width: none; padding: 0; }
+  .book-nav { display: none; }
+  section { page-break-inside: auto; }
+  h2 { page-break-after: avoid; }
+  h3 { page-break-after: avoid; }
+  table { page-break-inside: auto; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  .note { page-break-inside: avoid; }
+  .chapter-head { margin-top: 0; page-break-after: avoid; }
+  .cover { min-height: auto; page-break-after: always; }
+  a { color: inherit; text-decoration: none; }
+}
+
+@media (max-width: 700px) {
+  .page { padding: 1.2rem 1rem 3rem; }
+  html { font-size: 15px; }
+  table { display: block; overflow-x: auto; }
+  .cover h1 { font-size: 2.1rem; }
+}

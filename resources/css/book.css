@@ -1,0 +1,788 @@
+/* ==========================================================================
+   JLPT N5 Pregnancy & Hospital Survival Guide
+   Print-first A4 textbook system — washi paper, hanko vermilion, ink black.
+   Latin/romaji: Montserrat · Japanese: Noto Serif JP
+   ========================================================================== */
+
+:root {
+    /* paper & ink — two-colour book standard: ink black + hanko vermilion */
+    --paper:        #fffefb;
+    --paper-bright: #ffffff;
+    --zebra:        #f6f2ea;
+    --ink:          #211b14;
+    --ink-soft:     #453d31;
+    --ink-faint:    #6d6353;
+
+    /* accents */
+    --vermilion:      #b3341f;
+    --vermilion-deep: #8a2413;
+    --vermilion-tint: #f7e8e2;
+    --indigo:         #211b14;
+    --indigo-tint:    #f2eee6;
+
+    /* rules */
+    --rule:      #ddd3bd;
+    --rule-dark: #a2967a;
+    --rule-ink:  #3a3226;
+
+    /* speaker palette — patient side in ink, hospital side in vermilion */
+    --spk-husband: #211b14;
+    --spk-wife:    #211b14;
+    --spk-nurse:   #b3341f;
+    --spk-doctor:  #b3341f;
+    --spk-midwife: #b3341f;
+    --spk-staff:   #b3341f;
+    --spk-other:   #211b14;
+
+    /* type */
+    --latin: 'Montserrat', 'Segoe UI', -apple-system, sans-serif;
+    /* Zen Kaku Gothic New: schoolbook-proportioned gothic with a true Bold
+       face — kyokasho fonts (UD/Klee) only ship thin strokes */
+    --jp: 'Zen Kaku Gothic New', 'UD Digi Kyokasho NK-R', 'Noto Sans JP',
+          'Yu Gothic', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+
+    /* backdrop (screen only) */
+    --desk: #eae7df;
+}
+
+/* ---------- base ---------- */
+
+.book-body {
+    margin: 0;
+    background: var(--desk);
+    background-image:
+        radial-gradient(ellipse 90% 60% at 50% -10%, rgba(179, 52, 31, 0.05), transparent 60%),
+        radial-gradient(ellipse 80% 50% at 50% 115%, rgba(49, 80, 111, 0.06), transparent 60%);
+    color: var(--ink);
+    font-family: var(--latin);
+    font-size: 10pt;
+    line-height: 1.66;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.book-body *,
+.book-body *::before,
+.book-body *::after { box-sizing: border-box; }
+
+/* 700 (not 600): UD Digi Kyokasho ships regular-only and browsers only
+   synthesize bold from 700 up — 600 silently renders thin */
+[lang='ja'], .jp { font-family: var(--jp); font-weight: 700; }
+
+/* ---------- furigana (ruby) ---------- */
+
+ruby { ruby-align: center; }
+
+rt {
+    font-family: var(--jp);
+    font-size: 0.62em;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--vermilion);
+    text-align: center;
+}
+
+::selection { background: var(--vermilion); color: var(--paper-bright); }
+
+/* ---------- the A4 sheet ---------- */
+
+.sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto 10mm;
+    padding: 15mm 15mm 16mm;
+    background: var(--paper);
+    box-shadow:
+        0 0 0 1px rgba(33, 27, 20, 0.06),
+        0 2px 6px rgba(33, 27, 20, 0.10),
+        0 18px 44px -14px rgba(33, 27, 20, 0.30);
+    position: relative;
+}
+
+.sheet--cover {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- screen chrome (nav bar above/below sheets) ---------- */
+
+.chrome {
+    width: 210mm;
+    margin: 0 auto;
+    padding: 12px 2px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.chrome--bottom { padding: 2px 2px 40px; }
+
+.chrome a,
+.chrome button {
+    font-family: var(--latin);
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--paper-bright);
+    border: 1px solid var(--rule-dark);
+    padding: 5px 11px;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+}
+
+.chrome a:hover,
+.chrome button:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper-bright);
+}
+
+.chrome .chrome-label {
+    flex: 1;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: var(--ink-soft);
+    font-size: 7pt;
+}
+
+.chrome .chrome-group { display: flex; gap: 6px; align-items: center; }
+
+.chrome button.print-btn {
+    color: var(--vermilion);
+    border-color: var(--vermilion);
+}
+.chrome button.print-btn:hover {
+    background: var(--vermilion);
+    border-color: var(--vermilion);
+    color: var(--paper-bright);
+}
+
+/* ---------- cover ---------- */
+
+.cover {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid var(--rule-dark);
+    outline: 1px solid var(--rule);
+    outline-offset: -4px;
+    padding: 18mm 14mm;
+}
+
+.cover .hanko {
+    width: 17mm;
+    height: 17mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--vermilion);
+    color: var(--paper-bright);
+    font-family: var(--jp);
+    font-weight: 700;
+    font-size: 22pt;
+    line-height: 1;
+    border-radius: 1.5px;
+    transform: rotate(-3deg);
+    box-shadow: inset 0 0 0 1.2px var(--paper-bright), inset 0 0 0 2.4px var(--vermilion);
+    margin-bottom: 11mm;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.cover .series {
+    margin: 0 0 9mm;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    text-indent: 0.5em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.cover h1 {
+    margin: 0 0 7mm;
+    font-family: var(--latin);
+    font-weight: 800;
+    font-size: 29pt;
+    line-height: 1.14;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    max-width: 15em;
+}
+
+.cover h1 em {
+    font-style: normal;
+    color: var(--vermilion);
+}
+
+.cover .jp-title {
+    margin: 0 0 8mm;
+    font-family: var(--jp);
+    font-weight: 700;
+    font-size: 12.5pt;
+    color: var(--indigo);
+}
+
+.cover .jp-title .romaji {
+    display: block;
+    margin-top: 2.5mm;
+    font-family: var(--latin);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 8.5pt;
+    letter-spacing: 0.07em;
+    color: var(--ink);
+}
+
+.cover .subtitle {
+    margin: 0 auto 12mm;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 9.5pt;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 32em;
+}
+
+.cover .cover-rule {
+    width: 34mm;
+    margin: 0 auto 12mm;
+    border: none;
+    border-top: 3px double var(--rule-dark);
+}
+
+.cover .edition {
+    margin: 0;
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    text-indent: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+/* ---------- page headings (foreword / TOC) ---------- */
+
+.page-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 4mm;
+    margin: 0 0 7mm;
+    padding-bottom: 2.5mm;
+    border-bottom: 1.5px solid var(--rule-ink);
+    break-after: avoid;
+}
+
+.page-heading .head-seal {
+    font-family: var(--jp);
+    font-weight: 700;
+    font-size: 10pt;
+    color: var(--paper-bright);
+    background: var(--vermilion);
+    padding: 1mm 2.2mm;
+    border-radius: 1px;
+    line-height: 1.3;
+    align-self: center;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.page-heading h2 {
+    margin: 0;
+    font-family: var(--latin);
+    font-weight: 700;
+    font-size: 15pt;
+    letter-spacing: -0.01em;
+}
+
+.page-heading .head-jp {
+    margin-left: auto;
+    font-family: var(--jp);
+    font-size: 10.5pt;
+    color: var(--vermilion);
+}
+
+/* ---------- prose ---------- */
+
+.prose { font-size: 9.5pt; margin: 0 0 3.2mm; }
+.prose p { margin: 0 0 3.2mm; text-align: justify; }
+.prose > p:last-child { margin-bottom: 0; }
+.prose strong { font-weight: 700; color: var(--vermilion); }
+.prose em { font-style: italic; }
+.prose [lang='ja'] { font-family: var(--jp); font-size: 10pt; }
+.prose p:has(ruby), .note p:has(ruby), .note li:has(ruby) { line-height: 2.05; }
+.prose ul, .prose ol { margin: 1.5mm 0 3.2mm; padding-left: 6mm; }
+.prose li { margin-bottom: 1.6mm; font-size: 9.5pt; }
+
+.prose h3 {
+    margin: 6mm 0 2.5mm;
+    font-family: var(--latin);
+    font-weight: 700;
+    font-size: 10.5pt;
+    letter-spacing: 0.01em;
+    color: var(--vermilion);
+    break-after: avoid;
+}
+
+/* ---------- chapter head ---------- */
+
+.chapter-head {
+    display: flex;
+    align-items: stretch;
+    gap: 8mm;
+    margin: 4mm 0 10mm;
+    padding: 6mm 0 7mm;
+    border-top: 2.5px solid var(--rule-ink);
+    border-bottom: 1px solid var(--rule-dark);
+    break-after: avoid;
+    break-inside: avoid;
+}
+
+.chapter-head .ch-main { flex: 1; align-self: center; }
+
+.chapter-head .ch-kicker {
+    margin: 0 0 2.5mm;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--vermilion);
+}
+
+.chapter-head h1 {
+    margin: 0 0 2.8mm;
+    font-family: var(--latin);
+    font-weight: 800;
+    font-size: 24pt;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+}
+
+.chapter-head .ch-jp {
+    margin: 0;
+    font-family: var(--jp);
+    font-weight: 700;
+    font-size: 12pt;
+    color: var(--indigo);
+}
+
+.chapter-head .ch-jp .romaji {
+    font-family: var(--latin);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 8.5pt;
+    letter-spacing: 0.07em;
+    color: var(--ink);
+}
+
+/* vertical kanji label, like the spine of a Japanese book */
+.chapter-head .ch-kanji {
+    writing-mode: vertical-rl;
+    font-family: var(--jp);
+    font-weight: 700;
+    font-size: 19pt;
+    letter-spacing: 0.28em;
+    color: var(--vermilion);
+    padding-left: 5mm;
+    border-left: 1px solid var(--rule-dark);
+    display: flex;
+    align-items: center;
+}
+
+/* ---------- sections ---------- */
+
+.book-section { margin: 0 0 8mm; }
+
+.section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 3mm;
+    margin: 0 0 3.5mm;
+    padding-bottom: 1.6mm;
+    border-bottom: 1px solid var(--rule-dark);
+    break-after: avoid;
+    break-inside: avoid;
+}
+
+.section-head .sec-no {
+    font-family: var(--latin);
+    font-weight: 800;
+    font-size: 10.5pt;
+    letter-spacing: 0.02em;
+    color: var(--vermilion);
+    font-variant-numeric: tabular-nums;
+}
+
+.section-head h2 {
+    margin: 0;
+    font-family: var(--latin);
+    font-weight: 700;
+    font-size: 11.5pt;
+    letter-spacing: 0;
+    color: var(--ink);
+}
+
+.section-head .sec-jp {
+    margin-left: auto;
+    padding-left: 4mm;
+    font-family: var(--jp);
+    font-size: 9.5pt;
+    color: var(--ink-soft);
+    white-space: nowrap;
+}
+
+/* scene line before a dialogue */
+.scene {
+    margin: 0 0 2.2mm;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 8.5pt;
+    color: var(--ink-soft);
+}
+.scene::before {
+    content: '\25B8'; /* small triangle */
+    color: var(--vermilion);
+    margin-right: 1.6mm;
+    font-style: normal;
+}
+.scene p { margin: 0; display: inline; }
+
+/* ---------- textbook tables ---------- */
+
+.book-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 5mm;
+    background: var(--paper-bright);
+    border: 1.5px solid var(--rule-ink);
+    font-size: 8.5pt;
+    line-height: 1.5;
+}
+
+.book-table thead { display: table-header-group; }
+
+.book-table thead th {
+    font-family: var(--latin);
+    font-size: 6.8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    text-align: left;
+    color: var(--ink);
+    background: var(--zebra);
+    padding: 1.7mm 2.4mm;
+    border-bottom: 1.5px solid var(--rule-ink);
+    border-right: 1px solid var(--rule);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+.book-table thead th:last-child { border-right: none; }
+
+.book-table tbody td {
+    padding: 1.6mm 2.4mm;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    vertical-align: top;
+}
+.book-table tbody td:last-child { border-right: none; }
+.book-table tbody tr:last-child td { border-bottom: none; }
+
+.book-table tbody tr:nth-child(even) {
+    background: var(--zebra);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.book-table tbody tr { break-inside: avoid; }
+
+.book-table td.jp {
+    font-family: var(--jp);
+    font-size: 10pt;
+    line-height: 2.2; /* room for furigana on wrapped lines */
+    color: var(--ink);
+}
+
+.book-table td.ro {
+    font-style: italic;
+    font-weight: 700;
+    font-size: 8.5pt;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+}
+
+.book-table td.en {
+    font-weight: 700;
+    font-size: 8.5pt;
+    color: var(--ink);
+}
+
+/* dialogue: Speaker | Japanese | Romaji | English */
+.dialogue col.c-spk { width: 12%; }
+.dialogue col.c-jp  { width: 33%; }
+.dialogue col.c-ro  { width: 28%; }
+.dialogue col.c-en  { width: 27%; }
+
+/* vocab: Japanese | Romaji | English */
+.vocab col.c-jp { width: 33%; }
+.vocab col.c-ro { width: 28%; }
+.vocab col.c-en { width: 39%; }
+
+/* ---------- speaker color coding ---------- */
+
+.dialogue td.spk {
+    font-family: var(--latin);
+    font-size: 6.6pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    white-space: nowrap;
+    padding-top: 2.1mm;
+    border-left: 2.5px solid var(--spk-other);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.dialogue tr.spk-husband td.spk { border-left-color: var(--spk-husband); color: var(--spk-husband); }
+.dialogue tr.spk-wife    td.spk { border-left-color: var(--spk-wife);    color: var(--spk-wife); }
+.dialogue tr.spk-nurse   td.spk { border-left-color: var(--spk-nurse);   color: var(--spk-nurse); }
+.dialogue tr.spk-doctor  td.spk { border-left-color: var(--spk-doctor);  color: var(--spk-doctor); }
+.dialogue tr.spk-midwife td.spk { border-left-color: var(--spk-midwife); color: var(--spk-midwife); }
+.dialogue tr.spk-staff   td.spk { border-left-color: var(--spk-staff);   color: var(--spk-staff); }
+.dialogue tr.spk-other   td.spk { border-left-color: var(--spk-other);   color: var(--spk-other); }
+
+/* ---------- note boxes ---------- */
+
+.note {
+    margin: 0 0 5mm;
+    padding: 3.4mm 4.5mm 3.6mm;
+    background: var(--paper-bright);
+    border: 1px solid var(--rule-dark);
+    border-left: 3px solid var(--vermilion);
+    font-size: 8.8pt;
+    break-inside: avoid;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+.note .note-title {
+    margin: 0 0 1.8mm;
+    font-family: var(--latin);
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--vermilion);
+}
+
+.note p { margin: 0 0 1.8mm; text-align: justify; }
+.note p:last-child { margin-bottom: 0; }
+.note ul, .note ol { margin: 1mm 0 0; padding-left: 5mm; }
+.note li { margin-bottom: 1.4mm; }
+.note li:last-child { margin-bottom: 0; }
+.note strong { color: var(--vermilion); }
+.note [lang='ja'] { font-family: var(--jp); }
+
+.note--culture {
+    border-left-color: var(--indigo);
+    background: linear-gradient(to right, var(--indigo-tint), var(--paper-bright) 45%);
+}
+.note--culture .note-title { color: var(--indigo); }
+.note--culture strong { color: var(--indigo); }
+
+/* ---------- table of contents ---------- */
+
+.toc-part {
+    margin: 7mm 0 2mm;
+    padding-bottom: 1.4mm;
+    border-bottom: 1px solid var(--rule-dark);
+    display: flex;
+    align-items: baseline;
+    gap: 3mm;
+    break-after: avoid;
+}
+
+.toc-part .part-no {
+    font-family: var(--latin);
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--vermilion);
+}
+
+.toc-part .part-title {
+    font-family: var(--latin);
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.toc-part .part-jp {
+    margin-left: auto;
+    font-family: var(--jp);
+    font-size: 8.5pt;
+    color: var(--ink-soft);
+}
+
+.toc-list { list-style: none; margin: 0 0 2mm; padding: 0; }
+
+.toc-list a {
+    display: flex;
+    align-items: baseline;
+    gap: 3mm;
+    padding: 1.7mm 1mm;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rule);
+    break-inside: avoid;
+    transition: background 0.12s ease;
+}
+
+.toc-list li:last-child a { border-bottom: none; }
+.toc-list a:hover { background: var(--zebra); }
+.toc-list a:hover .toc-title { color: var(--vermilion-deep); }
+
+.toc-no {
+    font-family: var(--latin);
+    font-size: 7.5pt;
+    font-weight: 800;
+    color: var(--vermilion);
+    min-width: 5mm;
+    font-variant-numeric: tabular-nums;
+}
+
+.toc-title { font-weight: 600; font-size: 9pt; }
+
+.toc-romaji {
+    font-style: italic;
+    font-weight: 700;
+    font-size: 7.5pt;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+}
+
+.toc-leader {
+    flex: 1;
+    min-width: 5mm;
+    border-bottom: 1.5px dotted var(--rule-dark);
+    transform: translateY(-0.8mm);
+}
+
+.toc-jp {
+    padding-left: 2mm;
+    font-family: var(--jp);
+    font-size: 8.5pt;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.toc-page {
+    min-width: 6mm;
+    text-align: right;
+    font-family: var(--latin);
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- footer line ---------- */
+
+.book-footer {
+    margin-top: 9mm;
+    padding-top: 2.2mm;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    gap: 4mm;
+    font-size: 6.8pt;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.book-footer .jp {
+    font-family: var(--jp);
+    font-weight: 700;
+    letter-spacing: 0.3em;
+}
+
+.book-footer .page-no {
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.24em;
+    text-indent: 0.24em;
+    text-transform: none;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- print ---------- */
+
+@page { size: A4; margin: 15mm 15mm 16mm; }
+
+@media print {
+    .book-body { background: #fff; font-size: 10pt; }
+
+    .sheet {
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        box-shadow: none;
+    }
+
+    .sheet--break { break-after: page; }
+    .sheet--cover { display: block; }
+
+    .chrome { display: none !important; }
+
+    .cover {
+        min-height: 250mm;
+        break-after: page;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .book-table { break-inside: auto; }
+    .book-table thead { display: table-header-group; }
+    .book-table tbody tr { break-inside: avoid; }
+
+    .note, .section-head, .chapter-head, .page-heading, .toc-part { break-inside: avoid; }
+    .section-head, .page-heading, .toc-part, .prose h3 { break-after: avoid; }
+
+    .toc-list a { border-bottom-color: var(--rule); }
+}
+
+/* ---------- small screens (reading on a phone, not printing) ---------- */
+
+@media screen and (max-width: 860px) {
+    .sheet, .chrome { width: auto; }
+    .sheet { margin: 0 0 6mm; padding: 8mm 6mm; min-height: 0; }
+    .chrome { padding-left: 6mm; padding-right: 6mm; }
+    .chrome .chrome-label { display: none; }
+    .table-scroll { overflow-x: auto; }
+    .table-scroll .book-table { min-width: 640px; }
+    .chapter-head { flex-direction: column-reverse; gap: 4mm; }
+    .chapter-head .ch-kanji {
+        writing-mode: horizontal-tb;
+        border-left: none;
+        padding-left: 0;
+        font-size: 14pt;
+    }
+    .cover h1 { font-size: 22pt; }
+}
