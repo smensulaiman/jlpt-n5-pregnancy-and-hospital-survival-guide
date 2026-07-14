@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'JLPT N5 Pregnancy & Hospital Survival Guide')</title>
-    <meta name="description" content="Practical Japanese for foreign parents living in Japan — real hospital conversations for pregnancy, labor, childbirth, and postpartum care.">
+    <meta name="description" content="Practical Japanese for foreign parents living in Japan: real hospital conversations for pregnancy, labor, childbirth, and postpartum care.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

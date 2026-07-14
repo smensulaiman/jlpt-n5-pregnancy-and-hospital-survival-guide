@@ -1,6 +1,6 @@
 @extends('layouts.book')
 
-@section('title', 'Chapter ' . $chapter->number . ' — ' . $chapter->title_en . ' | JLPT N5 Hospital Guide')
+@section('title', 'Chapter ' . $chapter->number . ': ' . $chapter->title_en . ' | JLPT N5 Hospital Guide')
 
 @section('content')
 
@@ -23,7 +23,7 @@
             <h1>{{ $chapter->title_en }}</h1>
             <p class="ch-jp">
                 <span lang="ja">{!! $chapter->title_jp_ruby ?? e($chapter->title_jp) !!}</span>
-                <span class="romaji">&mdash; {{ $chapter->title_romaji }}</span>
+                <span class="romaji">&middot; {{ $chapter->title_romaji }}</span>
             </p>
         </div>
         <div class="ch-kanji" lang="ja" aria-hidden="true">{{ $chapter->kanji_label }}</div>
