@@ -8,8 +8,8 @@
     <a href="{{ route('book.index') }}">&larr; Contents</a>
     <span class="chrome-label">Chapter {{ $chapter->number }} of 20</span>
     <span class="chrome-group">
-        <a class="pdf-btn" href="{{ route('book.pdf') }}">Download PDF &middot; PDF保存</a>
-        <button type="button" class="print-btn" onclick="window.print()">Print &middot; 印刷</button>
+        <a class="pdf-btn" href="{{ route('book.pdf') }}">Download PDF</a>
+        <button type="button" class="print-btn" onclick="window.print()">Print</button>
         @if($next)
             <a href="{{ route('book.chapter', $next) }}">Chapter {{ $next->number }} &rarr;</a>
         @endif

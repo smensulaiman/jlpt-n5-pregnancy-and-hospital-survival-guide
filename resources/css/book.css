@@ -97,9 +97,6 @@ rt {
         0 2px 6px rgba(33, 27, 20, 0.10),
         0 18px 44px -14px rgba(33, 27, 20, 0.30);
     position: relative;
-}
-
-.sheet--cover {
     display: flex;
     flex-direction: column;
 }
@@ -552,18 +549,18 @@ rt {
     letter-spacing: 0.09em;
     white-space: nowrap;
     padding-top: 2.1mm;
-    border-left: 2.5px solid var(--spk-other);
+    color: var(--spk-color, var(--spk-other));
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
 }
 
-.dialogue tr.spk-husband td.spk { border-left-color: var(--spk-husband); color: var(--spk-husband); }
-.dialogue tr.spk-wife    td.spk { border-left-color: var(--spk-wife);    color: var(--spk-wife); }
-.dialogue tr.spk-nurse   td.spk { border-left-color: var(--spk-nurse);   color: var(--spk-nurse); }
-.dialogue tr.spk-doctor  td.spk { border-left-color: var(--spk-doctor);  color: var(--spk-doctor); }
-.dialogue tr.spk-midwife td.spk { border-left-color: var(--spk-midwife); color: var(--spk-midwife); }
-.dialogue tr.spk-staff   td.spk { border-left-color: var(--spk-staff);   color: var(--spk-staff); }
-.dialogue tr.spk-other   td.spk { border-left-color: var(--spk-other);   color: var(--spk-other); }
+.dialogue tr.spk-husband td.spk { --spk-color: var(--spk-husband); }
+.dialogue tr.spk-wife    td.spk { --spk-color: var(--spk-wife); }
+.dialogue tr.spk-nurse   td.spk { --spk-color: var(--spk-nurse); }
+.dialogue tr.spk-doctor  td.spk { --spk-color: var(--spk-doctor); }
+.dialogue tr.spk-midwife td.spk { --spk-color: var(--spk-midwife); }
+.dialogue tr.spk-staff   td.spk { --spk-color: var(--spk-staff); }
+.dialogue tr.spk-other   td.spk { --spk-color: var(--spk-other); }
 
 /* ---------- note boxes ---------- */
 
@@ -599,7 +596,7 @@ rt {
 
 .note--culture {
     border-left-color: var(--indigo);
-    background: linear-gradient(to right, var(--indigo-tint), var(--paper-bright) 45%);
+    background: var(--indigo-tint);
 }
 .note--culture .note-title { color: var(--indigo); }
 .note--culture strong { color: var(--indigo); }
@@ -704,7 +701,7 @@ rt {
 /* ---------- footer line ---------- */
 
 .book-footer {
-    margin-top: 9mm;
+    margin-top: auto;
     padding-top: 2.2mm;
     border-top: 1px solid var(--rule);
     display: flex;
@@ -741,7 +738,9 @@ rt {
 
     .sheet {
         width: auto;
-        min-height: 0;
+        /* printable area is 297mm minus the 15mm top and 16mm bottom @page
+           margins; slightly less so a one-page sheet never spills over */
+        min-height: 265mm;
         margin: 0;
         padding: 0;
         background: #fff;

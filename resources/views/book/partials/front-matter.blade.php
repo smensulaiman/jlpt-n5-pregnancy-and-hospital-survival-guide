@@ -7,13 +7,12 @@
     <div class="cover">
         <div class="hanko" lang="ja" aria-hidden="true">産</div>
         <p class="series">Practical Japanese Series &middot; <span lang="ja"><ruby>実用<rt>じつよう</rt></ruby><ruby>日本語<rt>にほんご</rt></ruby></span></p>
-        <h1>JLPT N5 Pregnancy &amp;<br>Hospital <em>Survival Guide</em></h1>
+        <h1>Pregnancy &amp;<br>Hospital <em>Survival Guide</em></h1>
         <p class="jp-title">
             <span lang="ja"><ruby>妊娠<rt>にんしん</rt></ruby>・<ruby>出産<rt>しゅっさん</rt></ruby>のための<ruby>病院<rt>びょういん</rt></ruby><ruby>日本語<rt>にほんご</rt></ruby></span>
             <span class="romaji">Ninshin &middot; Shussan no tame no byouin Nihongo</span>
         </p>
-        <p class="subtitle">Practical Japanese for Foreign Parents Living in Japan, real hospital conversations for pregnancy, labor, childbirth, and postpartum care.</p>
-        <hr class="cover-rule">
+        <p class="subtitle">Practical Japanese for Foreign Parents Living in Japan, real hospital conversations for pregnancy, labor, and childbirth.</p>
         <p class="edition">First Edition &middot; Twenty Chapters &middot; Print-Ready A4</p>
     </div>
 </main>
